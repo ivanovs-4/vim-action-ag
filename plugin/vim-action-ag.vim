@@ -37,7 +37,9 @@ function! s:Ag(mode) abort
 
   " execute Ag command
   " '!' is used to NOT jump to the first match
-  exe ":Ag!" "'".escaped_for_ag."'"
+  let cmd = "Ag! "."'".escaped_for_ag."'"
+  call histadd("cmd", cmd)
+  exe cmd
 
   " go to the first search match
   normal! n
