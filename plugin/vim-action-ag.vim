@@ -24,7 +24,8 @@ function! s:Ag(mode) abort
   endif
 
   " prepare for search highlight
-  let escaped_for_vim = escape(@@, '/\')
+  let escaped_for_vim = escape(@@, '/\'."'")
+  let escaped_for_vim = substitute(escaped_for_vim, "'", "''", 'g')
   exe ":let @/='\\V".escaped_for_vim."'"
 
   " escape special chars,
@@ -32,6 +33,7 @@ function! s:Ag(mode) abort
   " # is secial in ag
   let escaped_for_ag = escape(@@, '%#')
   let escaped_for_ag = escape(escaped_for_ag, g:vim_action_ag_escape_chars)
+  let escaped_for_ag = substitute(escaped_for_ag, "'", "'".'"'."'".'"'."'", 'g')
 
   " execute Ag command
   " '!' is used to NOT jump to the first match
